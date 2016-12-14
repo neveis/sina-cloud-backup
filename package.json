@@ -1,0 +1,12 @@
+{
+    "name": "sinacloudbackup",
+    "version": "1.0.0",
+    "description": "备份文件至新浪云存储",
+    "main": "main.js",
+    "dependencies": {
+        "scs-sdk": "^0.1.4"
+    },
+    "devDependencies": {},
+    "author": "neveis",
+    "license": "MIT"
+}
