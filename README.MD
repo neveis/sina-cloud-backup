@@ -3,9 +3,12 @@
 需要准备nodejs运行环境，以及新浪云存储账号。
 
 需要对config文件进行配置。
-假如上传文件的路径是:D:\abc\up
+假如上传文件的路径是: D:\abc\up
+
 basicRoot: D:\abc
+
 uploadDir: up
+
 bucket、accessKeyId、secretAccessKey为新浪云存储相关（key注意保密）。
 
 注：Windows下注意路径的填写，反斜杠为'\\'。

@@ -22,70 +22,75 @@ var getFileList = function(dirName, callback) {
                 console.log(dirName, 'read error');
                 return;
             }
-            //忽略空目录
-            for (let i = 0; i < files.length; i++) {
-                //console.log(files[i]);
-                let filename = path.join(dirName, files[i]);
-                if (i === files.length - 1) {
-                    fs.stat(filename, function(err, stats) {
-                        if (err) {
-                            console.log('stat read error')
-                            return;
-                        }
-                        if (stats.isDirectory()) {
-                            walk(filename);
-                        } else {
-                            let date = new Date(stats.mtime);
-                            let time = date.getTime();
-                            let fname = filename.substring(config.basicRoot.length);
-                            if (fname in record) {
-                                if (record[fname].mtime === time) {
-                                    record[fname].status = 0;
-                                } else {
-                                    record[fname].mtime = time;
-                                    record[fname].status = 1;
-                                }
+            //空目录不上传
+            if (files.length) {
+                for (let i = 0; i < files.length; i++) {
+                    //console.log(files[i]);
+                    let filename = path.join(dirName, files[i]);
+                    if (i === files.length - 1) {
+                        fs.stat(filename, function(err, stats) {
+                            if (err) {
+                                console.log('stat read error')
+                                return;
+                            }
+                            if (stats.isDirectory()) {
+                                walk(filename);
                             } else {
-                                record[fname] = {
-                                    mtime: time,
-                                    status: 1
+                                let date = new Date(stats.mtime);
+                                let time = date.getTime();
+                                let fname = filename.substring(config.basicRoot.length);
+                                if (fname in record) {
+                                    if (record[fname].mtime === time) {
+                                        record[fname].status = 0;
+                                    } else {
+                                        record[fname].mtime = time;
+                                        record[fname].status = 1;
+                                    }
+                                } else {
+                                    record[fname] = {
+                                        mtime: time,
+                                        status: 1
+                                    }
                                 }
                             }
-                        }
-                        count--;
-                        if (count === 0) {
-                            console.log('over');
-                            callback && callback(record);
-                        }
-                    });
-                } else {
-                    fs.stat(filename, function(err, stats) {
-                        if (err) {
-                            console.log('stat read error')
-                            return;
-                        }
-                        if (stats.isDirectory()) {
-                            walk(filename);
-                        } else {
-                            let date = new Date(stats.mtime);
-                            let time = date.getTime();
-                            let fname = filename.substring(config.basicRoot.length);
-                            if (fname in record) {
-                                if (record[fname].mtime === time) {
-                                    record[fname].status = 0;
-                                } else {
-                                    record[fname].mtime = time;
-                                    record[fname].status = 1;
-                                }
+                            count--;
+                            console.log(count)
+                            if (count === 0) {
+                                console.log('over');
+                                callback && callback(record);
+                            }
+                        });
+                    } else {
+                        fs.stat(filename, function(err, stats) {
+                            if (err) {
+                                console.log('stat read error')
+                                return;
+                            }
+                            if (stats.isDirectory()) {
+                                walk(filename);
                             } else {
-                                record[fname] = {
-                                    mtime: time,
-                                    status: 1
+                                let date = new Date(stats.mtime);
+                                let time = date.getTime();
+                                let fname = filename.substring(config.basicRoot.length);
+                                if (fname in record) {
+                                    if (record[fname].mtime === time) {
+                                        record[fname].status = 0;
+                                    } else {
+                                        record[fname].mtime = time;
+                                        record[fname].status = 1;
+                                    }
+                                } else {
+                                    record[fname] = {
+                                        mtime: time,
+                                        status: 1
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
+            } else {
+                count--;
             }
         })
     };
