@@ -26,7 +26,7 @@ var getFileList = function(dirName, callback) {
             if (files.length) {
                 for (let i = 0; i < files.length; i++) {
                     //console.log(files[i]);
-                    let filename = path.join(dirName, files[i]);
+                    let filename = path.join(dirName, files[i]).replace(/\\/g, '/');
                     if (i === files.length - 1) {
                         fs.stat(filename, function(err, stats) {
                             if (err) {
@@ -118,7 +118,7 @@ getFileList(dir, function(record) {
         } else if (record[fname].status === 1) {
             //upload
             //转换为unix路径
-            let uploadName = fname.replace(/\\/g, '/');
+            let uploadName = fname;
             fs.readFile(path.join(config.basicRoot, fname), function(err, fdata) {
                 let data = { Key: uploadName, Body: fdata };
                 mybucket.putObject(data, function(err, udata) {
@@ -133,7 +133,7 @@ getFileList(dir, function(record) {
             console.log('upload ', fname)
         } else {
             //delete
-            let delName = fname.replace(/\\/g, '/');
+            let delName = fname;
             mybucket.deleteObject({ Key: delName }, function(err, data) {
                 if (err) {
                     console.log("Error delete ", err); // an error occurred
