@@ -7,8 +7,8 @@ const SinaCloud = require('scs-sdk');
 var getFileList = function(dirName, callback) {
     var record;
 
-    if (fs.existsSync("./record.json")) {
-        record = fs.readFileSync("./record.json", 'utf8');
+    if (fs.existsSync('./' + config.targetDir.replace(/\//g, '-') + '.json')) {
+        record = fs.readFileSync('./' + config.targetDir.replace(/\//g, '-') + '.json', 'utf8');
         record = JSON.parse(record);
     } else {
         record = {};
@@ -54,9 +54,9 @@ var getFileList = function(dirName, callback) {
                                 }
                             }
                             count--;
-                            console.log(count)
+                            //console.log(count)
                             if (count === 0) {
-                                console.log('over');
+                                //console.log('over');
                                 callback && callback(record);
                             }
                         });
@@ -145,5 +145,5 @@ getFileList(dir, function(record) {
             console.log('delete ', fname);
         }
     }
-    fs.writeFileSync('./record.json', JSON.stringify(record));
+    fs.writeFileSync('./' + config.targetDir.replace(/\//g, '-') + '.json', JSON.stringify(record));
 });

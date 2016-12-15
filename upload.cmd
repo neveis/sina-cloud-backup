@@ -1,2 +1,2 @@
-node ./main.js
+node ./upload.js
 pause
