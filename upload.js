@@ -106,10 +106,10 @@ var scConfig = new SinaCloud.Config({
 });
 
 //全局生效:
-SinaCloud.config = config;
+SinaCloud.config = scConfig;
 var mybucket = new SinaCloud.S3({ params: { Bucket: config.bucket } });
 
-var dir = path.join(config.basicRoot, config.uploadDir);
+var dir = path.join(config.basicRoot, config.targetDir);
 
 getFileList(dir, function(record) {
     for (fname in record) {

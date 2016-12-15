@@ -1,6 +1,6 @@
 module.exports = {
     "basicRoot": "",
-    "uploadDir": "",
+    "targetDir": "",
     accessKeyId: "",
     secretAccessKey: "",
     bucket: ""

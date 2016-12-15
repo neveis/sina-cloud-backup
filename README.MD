@@ -7,7 +7,7 @@
 
 basicRoot: D:/abc/  (注意末尾需要斜杠)
 
-uploadDir: up
+targetDir: up  （注意前面不要加'/'）
 
 bucket、accessKeyId、secretAccessKey为新浪云存储相关（key注意保密）。
 
@@ -16,3 +16,7 @@ bucket、accessKeyId、secretAccessKey为新浪云存储相关（key注意保密
 Windows下先运行init.cmd安装依赖。配置好config后，运行upload上传文件。
 
 仅为切换电脑临时备份，不可靠！特别注意record.json文件。若上传目录改变，需要删除，否则会误删云上的文件。
+
+下载会完全覆盖本地文件。确保版本的正确性后再下载。本地更新的文件需要手动备份。
+
+空目录不会上传。云上目录名字相当于前缀，还未研究下载时如何分辨是否为目录，故暂不作处理。
